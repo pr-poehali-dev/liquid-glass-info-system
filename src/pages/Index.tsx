@@ -88,6 +88,59 @@ const Index = () => {
     ]
   }
 
+  const sectionContent = {
+    purchases: {
+      cards: [
+        { title: 'Проверка 44-ФЗ', icon: 'FileCheck2', desc: 'Автоматическая проверка соответствия закону' },
+        { title: 'Реестр контрактов', icon: 'BookOpen', desc: 'База всех заключенных контрактов' },
+        { title: 'План закупок', icon: 'Calendar', desc: 'График планируемых закупок на год' },
+        { title: 'Поставщики', icon: 'Users', desc: 'Рейтинг и история работы с поставщиками' },
+        { title: 'Торги', icon: 'Gavel', desc: 'Текущие и завершенные торговые процедуры' },
+        { title: 'Аналитика цен', icon: 'TrendingUp', desc: 'Мониторинг рыночных цен и экономия' }
+      ]
+    },
+    legal: {
+      cards: [
+        { title: 'Проверка договоров', icon: 'FileSignature', desc: 'ИИ анализ юридической чистоты' },
+        { title: 'Реестр НПА', icon: 'Scale', desc: 'Нормативно-правовые акты округа' },
+        { title: 'Судебные дела', icon: 'Briefcase', desc: 'Отслеживание судебных процессов' },
+        { title: 'Правовые риски', icon: 'AlertTriangle', desc: 'Оценка рисков по документам' },
+        { title: 'Шаблоны документов', icon: 'FileStack', desc: 'Библиотека юридических шаблонов' },
+        { title: 'Консультации', icon: 'MessageSquare', desc: 'ИИ-помощник по правовым вопросам' }
+      ]
+    },
+    finance: {
+      cards: [
+        { title: 'Бюджет округа', icon: 'PiggyBank', desc: 'Исполнение бюджета в реальном времени' },
+        { title: 'Расходы по статьям', icon: 'BarChart3', desc: 'Детализация расходов по категориям' },
+        { title: 'Казначейство', icon: 'Landmark', desc: 'Операции с казначейством' },
+        { title: 'Проверка смет', icon: 'Calculator', desc: 'ИИ проверка корректности смет' },
+        { title: 'Финансовые отчеты', icon: 'FileSpreadsheet', desc: 'Генерация отчетности' },
+        { title: 'Прогнозы', icon: 'LineChart', desc: 'Прогнозирование бюджета' }
+      ]
+    },
+    technical: {
+      cards: [
+        { title: 'ГОСТ и СНиП', icon: 'BookMarked', desc: 'База технических стандартов' },
+        { title: 'Проектная документация', icon: 'FolderOpen', desc: 'Хранилище проектов' },
+        { title: 'Проверка смет', icon: 'ClipboardCheck', desc: 'Верификация технических смет' },
+        { title: 'Паспорта объектов', icon: 'Building', desc: 'Техпаспорта зданий и сооружений' },
+        { title: 'Экспертиза проектов', icon: 'SearchCheck', desc: 'ИИ анализ проектной документации' },
+        { title: 'Реестр подрядчиков', icon: 'HardHat', desc: 'База строительных организаций' }
+      ]
+    },
+    custom: {
+      cards: [
+        { title: 'Проверка текста', icon: 'FileText', desc: 'Анализ любого документа' },
+        { title: 'Сравнение версий', icon: 'GitCompare', desc: 'Сравнение редакций документов' },
+        { title: 'Извлечение данных', icon: 'Database', desc: 'Парсинг информации из файлов' },
+        { title: 'Перевод документов', icon: 'Languages', desc: 'Автоперевод на другие языки' },
+        { title: 'Генерация резюме', icon: 'FileOutput', desc: 'Краткое содержание документов' },
+        { title: 'Поиск по базе', icon: 'SearchCode', desc: 'Умный поиск по всем документам' }
+      ]
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-white p-6">
       <div className="max-w-[1800px] mx-auto space-y-6">
@@ -171,6 +224,33 @@ const Index = () => {
             </Button>
           </div>
         </Card>
+
+        {activeSection !== 'all' && sectionContent[activeSection as keyof typeof sectionContent] && (
+          <Card className="glass border-0 rounded-3xl p-6 shadow-lg animate-fade-in">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Icon name={workSections.find(s => s.id === activeSection)?.icon || 'Folder'} className="text-primary" />
+              Функционал раздела: {workSections.find(s => s.id === activeSection)?.label}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {sectionContent[activeSection as keyof typeof sectionContent].cards.map((card, index) => (
+                <Card 
+                  key={index} 
+                  className="glass-green border-0 p-5 hover:shadow-lg transition-all hover:scale-105 cursor-pointer group"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 glass-yellow rounded-xl group-hover:scale-110 transition-transform">
+                      <Icon name={card.icon} size={24} className="text-secondary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-sm mb-1 text-foreground">{card.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{card.desc}</p>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </Card>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className="glass border-0 rounded-3xl p-6 shadow-lg animate-fade-in">
